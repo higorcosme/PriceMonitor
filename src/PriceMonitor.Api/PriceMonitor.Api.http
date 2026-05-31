@@ -1,0 +1,6 @@
+@PriceMonitor.Api_HostAddress = http://localhost:5191
+
+GET {{PriceMonitor.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,17 @@
+namespace PriceMonitor.Api.Controllers;
+
+[ApiController]
+[Route("api/produtos")]
+public class ProdutosMonitoradosController : ControllerBase
+{
+    private readonly CreateProdutoMonitoradoUseCase _createUseCase;
+    private readonly CheckProdutoPrecoUseCase _checkUseCase;
+
+    public ProdutosMonitoradosController(
+        CreateProdutoMonitoradoUseCase createUseCase,
+        CheckProdutoPrecoUseCase checkUseCase)
+    {
+        _createUseCase = createUseCase;
+        _checkUseCase = checkUseCase;
+    }
+}
