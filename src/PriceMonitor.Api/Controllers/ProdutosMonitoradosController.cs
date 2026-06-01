@@ -1,0 +1,65 @@
+using Microsoft.AspNetCore.Mvc;
+using PriceMonitor.Application.UseCases.ProdutosMonitorados.CreateProdutoMonitorado;
+using PriceMonitor.Application.UseCases.ProdutosMonitorados.Desativar;
+using PriceMonitor.Application.UseCases.ProdutosMonitorados.GetAll;
+using PriceMonitor.Application.UseCases.ProdutosMonitorados.GetById;
+
+namespace PriceMonitor.Api.Controllers;
+
+[ApiController]
+[Route("api/produtos")]
+public class ProdutosMonitoradosController : ControllerBase
+{
+    private readonly CreateProdutoMonitoradoUseCase _createUseCase;
+    private readonly IGetAllProdutosMonitoradosUseCase _getAllUseCase;
+    private readonly IGetProdutoMonitoradoByIdUseCase _getByIdUseCase;
+    private readonly IDesativarProdutoMonitoradoUseCase _desativarUseCase;
+
+    public ProdutosMonitoradosController(CreateProdutoMonitoradoUseCase createUseCase,
+    IGetAllProdutosMonitoradosUseCase getAllUseCase, IGetProdutoMonitoradoByIdUseCase getByIdUseCase,
+    IDesativarProdutoMonitoradoUseCase desativarUseCase)
+    {
+        _createUseCase = createUseCase;
+        _getAllUseCase = getAllUseCase;
+        _getByIdUseCase = getByIdUseCase;
+        _desativarUseCase = desativarUseCase;
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreateProdutoMonitoradoRequest request)
+    {
+        var result = await _createUseCase.ExecuteAsync(request);
+
+        return Ok(result);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var result = await _getAllUseCase.ExecuteAsync();
+
+        return Ok(result);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var result = await _getByIdUseCase.ExecuteAsync(id);
+
+        if (result is null)
+            return NotFound();
+
+        return Ok(result);
+    }
+
+    [HttpPatch("{id:guid}/desativar")]
+    public async Task<IActionResult> Desativar(Guid id)
+    {
+        var sucesso = await _desativarUseCase.ExecuteAsync(id);
+
+        if (!sucesso)
+            return NotFound();
+
+        return NoContent();
+    }
+}

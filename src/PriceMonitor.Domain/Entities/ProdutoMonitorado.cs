@@ -25,4 +25,14 @@ public class ProdutoMonitorado
         Ativo = true;
         DataCriacao = DateTime.UtcNow;
     }
+
+    public void Desativar()
+    {
+        Ativo = false;
+    }
+
+    public void Ativar()
+    {
+        Ativo = true;
+    }
 }
