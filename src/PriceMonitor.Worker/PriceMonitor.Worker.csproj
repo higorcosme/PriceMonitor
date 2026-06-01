@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-PriceMonitor.Worker-ec00b7e2-9b90-458d-bc57-7937ad96dde9</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PriceMonitor.Application\PriceMonitor.Application.csproj" />
+    <ProjectReference Include="..\PriceMonitor.Infrastructure\PriceMonitor.Infrastructure.csproj" />
+    <ProjectReference Include="..\PriceMonitor.Domain\PriceMonitor.Domain.csproj" />
+  </ItemGroup>
+</Project>

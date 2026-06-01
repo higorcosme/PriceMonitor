@@ -14,6 +14,8 @@ public static class DependencyInjection
         services.AddScoped<IHistoricoPrecoRepository, HistoricoPrecoRepository>();
         services.AddScoped<IEmailNotificationService, EmailNotificationService>();
 
+        services.AddHttpClient<IPriceScraperService, PriceScraperService>();
+
         return services;
     }
 }
