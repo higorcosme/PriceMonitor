@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using PriceMonitor.Application.UseCases.HistoricoPreco.GetByProdutoId;
 using PriceMonitor.Application.UseCases.ProdutosMonitorados.CreateProdutoMonitorado;
 using PriceMonitor.Application.UseCases.ProdutosMonitorados.Desativar;
 using PriceMonitor.Application.UseCases.ProdutosMonitorados.GetAll;
@@ -14,15 +15,17 @@ public class ProdutosMonitoradosController : ControllerBase
     private readonly IGetAllProdutosMonitoradosUseCase _getAllUseCase;
     private readonly IGetProdutoMonitoradoByIdUseCase _getByIdUseCase;
     private readonly IDesativarProdutoMonitoradoUseCase _desativarUseCase;
+    private readonly IGetHistoricoPrecoByProdutoIdUseCase _historicoUseCase;
 
     public ProdutosMonitoradosController(CreateProdutoMonitoradoUseCase createUseCase,
     IGetAllProdutosMonitoradosUseCase getAllUseCase, IGetProdutoMonitoradoByIdUseCase getByIdUseCase,
-    IDesativarProdutoMonitoradoUseCase desativarUseCase)
+    IDesativarProdutoMonitoradoUseCase desativarUseCase, IGetHistoricoPrecoByProdutoIdUseCase historicoUseCase)
     {
         _createUseCase = createUseCase;
         _getAllUseCase = getAllUseCase;
         _getByIdUseCase = getByIdUseCase;
         _desativarUseCase = desativarUseCase;
+        _historicoUseCase = historicoUseCase;
     }
 
     [HttpPost]
@@ -61,5 +64,13 @@ public class ProdutosMonitoradosController : ControllerBase
             return NotFound();
 
         return NoContent();
+    }
+
+    [HttpGet("{id:guid}/historico")]
+    public async Task<IActionResult> GetHistorico(Guid id)
+    {
+        var historico = await _historicoUseCase.ExecuteAsync(id);
+
+        return Ok(historico);
     }
 }
